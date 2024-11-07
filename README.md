@@ -1,9 +1,4 @@
 # Kenyan Elections 2024 - IEBC Electronic Voting System
-To include your project link in the README, you can add a "Live Demo" section. Here’s how to update it:
-
----
-
-# Kenyan Elections 2024 - IEBC Electronic Voting System
 
 This project is a web-based electronic voting system for the 2024 Kenyan elections, supporting a streamlined voting flow through different election positions (President, Governor, Senator, and MP). It provides users with a secure and interactive voting experience.
 
