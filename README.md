@@ -1,10 +1,22 @@
 # Kenyan Elections 2024 - IEBC Electronic Voting System
+To include your project link in the README, you can add a "Live Demo" section. Here’s how to update it:
+
+---
+
+# Kenyan Elections 2024 - IEBC Electronic Voting System
+
+This project is a web-based electronic voting system for the 2024 Kenyan elections, supporting a streamlined voting flow through different election positions (President, Governor, Senator, and MP). It provides users with a secure and interactive voting experience.
+
+## Live Demo
+
+Check out the live demo here: [eVoteSystem on GitHub Pages](https://tonyephy.github.io/eVoteSystem/)
 
 This project is a web-based electronic voting system for the 2024 Kenyan elections, supporting a streamlined voting flow through different election positions (President, Governor, Senator, and MP). It provides users with a secure and interactive voting experience.
 
 ## Project Structure
 
 - **Frontend**: `index.html`, `css/styles.css`
+- **Front End**
 - **Backend**: Mongo database, API endpoint to record votes (`http://localhost:3000/vote`)
 - **Libraries**: [Chart.js](https://www.chartjs.org/) for chart rendering, JavaScript for dynamic content and voting flow logic
 
