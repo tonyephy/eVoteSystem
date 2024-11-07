@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Election Results - Kenyan Elections 2024</title>
+    <link rel="stylesheet" href="css/result.css">
+    <link rel="stylesheet" href="css/styles.css"> <!-- Link to external CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="national-colors">
+        <div class="color-black"></div>
+        <div class="color-red"></div>
+        <div class="color-green"></div>
+    </div>
+
+    <header class="header">
+        <h1>2024 Kenyan Election Results</h1>
+        <p>Live updates and winners across all positions</p>
+    </header>
+
+    <main class="results-section">
+        <h2>Results Overview</h2>
+        <div class="chart-tiles">
+            <div class="card">
+                <h3>Result for Presidential</h3>
+                <canvas id="presidentialChart" width="200" height="200"></canvas>
+            </div>
+            <div class="card">
+                <h3>Result for Governors</h3>
+                <canvas id="gubernatorialChart" width="200" height="200"></canvas>
+            </div>
+            <div class="card">
+                <h3>Result for Senators</h3>
+                <canvas id="senatorialChart" width="200" height="200"></canvas>
+            </div>
+            <div class="card">
+                <h3>Result for Member of Parliament</h3>
+                <canvas id="mpChart" width="200" height="200"></canvas>
+            </div>
+        </div>
+        <div id="winners" class="winners-section"></div>
+    </main>
+
+    <script>
+    async function fetchResults() {
+        try {
+            const positions = ['president', 'governor', 'senator', 'mp'];
+            const data = {};
+
+            for (const position of positions) {
+                const response = await fetch(`http://localhost:3000/results/${position}`);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch results for ${position}`);
+                }
+                data[position] = await response.json();
+            }
+
+            renderCharts(data);
+            calculateWinners(data);
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+        }
+    }
+
+    function renderCharts(data) {
+        const ctxPres = document.getElementById('presidentialChart').getContext('2d');
+        const ctxGub = document.getElementById('gubernatorialChart').getContext('2d');
+        const ctxSen = document.getElementById('senatorialChart').getContext('2d');
+        const ctxMp = document.getElementById('mpChart').getContext('2d');
+
+        const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
+
+        new Chart(ctxPres, {
+            type: 'pie',
+            data: {
+                labels: data.president.map(candidate => candidate.name),
+                datasets: [{
+                    data: data.president.map(candidate => candidate.votes),
+                    backgroundColor: colors,
+                }]
+            }
+        });
+
+        new Chart(ctxGub, {
+            type: 'pie',
+            data: {
+                labels: data.governor.map(candidate => candidate.name),
+                datasets: [{
+                    data: data.governor.map(candidate => candidate.votes),
+                    backgroundColor: colors,
+                }]
+            }
+        });
+
+        new Chart(ctxSen, {
+            type: 'pie',
+            data: {
+                labels: data.senator.map(candidate => candidate.name),
+                datasets: [{
+                    data: data.senator.map(candidate => candidate.votes),
+                    backgroundColor: colors,
+                }]
+            }
+        });
+
+        new Chart(ctxMp, {
+            type: 'pie',
+            data: {
+                labels: data.mp.map(candidate => candidate.name),
+                datasets: [{
+                    data: data.mp.map(candidate => candidate.votes),
+                    backgroundColor: colors,
+                }]
+            }
+        });
+    }
+
+    function calculateWinners(data) {
+        const winners = document.getElementById('winners');
+        winners.innerHTML = `
+            <h3>Live Updates for Current Winners for Election 2024 </h3>
+            <p><strong>Presidential:</strong> ${data.president.reduce((prev, curr) => (prev.votes > curr.votes ? prev : curr)).name}</p>
+            <p><strong>Governor:</strong> ${data.governor.reduce((prev, curr) => (prev.votes > curr.votes ? prev : curr)).name}</p>
+            <p><strong>Senator:</strong> ${data.senator.reduce((prev, curr) => (prev.votes > curr.votes ? prev : curr)).name}</p>
+            <p><strong>MP:</strong> ${data.mp.reduce((prev, curr) => (prev.votes > curr.votes ? prev : curr)).name}</p>
+            `;
+    }
+
+    window.onload = fetchResults;
+    </script>
+    <div class="card">
+        <h3>Leave This Page to sigin</h3>
+        <h3><a href="Signin.html" style="color: red;">Sign Out</a></h3>
+    </div>
+    <header class="header">
+        <h1>2024 Kenyan Election Results</h1>
+        <p>Live updates and winners across all positions</p>
+    </header>
+</body>
+</html>
