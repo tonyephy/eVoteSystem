@@ -11,9 +11,8 @@ This project is a web-based electronic voting system for the 2024 Kenyan electio
 ## Project Structure
 
 - **Frontend**: `index.html`, `css/styles.css`
-- **Front End**
-- **Backend**: Mongo database, API endpoint to record votes (`http://localhost:3000/vote`)
-- **Libraries**: [Chart.js](https://www.chartjs.org/) for chart rendering, JavaScript for dynamic content and voting flow logic
+- **Backend**: Firebase Firestore, API endpoint to record votes
+- **Libraries**: [Chart.js](https://www.chartjs.org/) for chart rendering, JavaScript for dynamic content and voting flow logic, Firebase for data storage and user authentication
 
 ## Features
 
@@ -21,6 +20,8 @@ This project is a web-based electronic voting system for the 2024 Kenyan electio
 - **Confirmation Modal**: Ensures that voters confirm their candidate selection before submitting.
 - **Progress Bar**: Visually represents the voter’s progress through the different election positions.
 - **Dynamic Redirection**: Redirects the user to the results page once voting is completed.
+- **Firebase Authentication**: Secure login and sign-up via Firebase Authentication.
+- **Real-Time Database**: Voting data is stored and updated in Firebase Firestore in real-time.
 
 ## Installation
 
@@ -33,15 +34,13 @@ This project is a web-based electronic voting system for the 2024 Kenyan electio
 
 2. **Install the backend dependencies** (if applicable):
 
-   ```bash
-   npm install
-   ```
+   This project uses Firebase directly on the frontend, so no backend server setup is required.
 
-3. **Start the backend server**:
+3. **Set up Firebase**:
 
-   ```bash
-   node server.js
-   ```
+   - Create a Firebase project on [Firebase Console](https://console.firebase.google.com/).
+   - Replace the Firebase configuration object in your frontend code with your own Firebase config.
+   - Ensure Firestore is enabled in your Firebase project.
 
 4. **Open the frontend**:
 
@@ -66,24 +65,24 @@ This project is a web-based electronic voting system for the 2024 Kenyan electio
 ### JavaScript Logic
 
 - **Voting Flow**: `positions` array controls the voting flow between positions. Each confirmed vote updates `currentPosition` and triggers `switchSection()` to display the next voting section.
-- **Confirm Vote**: `confirmVote()` function sends a `POST` request to the backend to record the vote. On success, the next section is displayed.
+- **Confirm Vote**: `confirmVote()` function sends a `POST` request to Firebase to record the vote. On success, the next section is displayed.
 - **Progress Bar**: Updates based on the user’s progress.
 - **Redirect to Results**: After completing all votes, the user is redirected to `result.html`.
 
-### Backend API
+### Firebase Setup
 
-- **Endpoint**: `POST /vote`
-  - Accepts a JSON body with `candidate` as the name of the selected candidate.
-  - Example request:
-    ```json
-    {
-      "candidate": "Raila Odinga"
-    }
-    ```
+- **Firebase Configuration**: Set up Firebase Authentication and Firestore.
+- **Storing Votes**: Each vote is stored in Firebase Firestore under collections corresponding to election positions (`presidential`, `gubernatorial`, `senatorial`, `mp`).
+- **Real-Time Updates**: Firestore updates in real-time to show voting results as they are recorded.
+
+### Firebase Authentication
+
+- **Sign-Up/Sign-In**: Firebase Authentication is used to handle user registration and login, ensuring secure access to the voting system.
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/) and npm for backend server
+- [Node.js](https://nodejs.org/) for local server (optional, if you want to run backend locally)
+- [Firebase](https://firebase.google.com/) account
 - A modern web browser
 
 ## Future Enhancements
@@ -91,3 +90,5 @@ This project is a web-based electronic voting system for the 2024 Kenyan electio
 - **Admin Dashboard**: A backend interface to monitor live results and voter turnout.
 - **Data Encryption**: Add encryption to securely handle sensitive data.
 - **Multi-language Support**: Translate the interface into multiple languages for wider accessibility.
+
+---
